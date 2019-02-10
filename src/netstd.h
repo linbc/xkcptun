@@ -123,6 +123,13 @@ static __INLINE__ const char *StrError(int x)
 #  include <netinet/tcp.h>
 /*#include <netdb.h>*/
 
+/*for struct ifreq */
+#include <net/if.h>
+#include <net/if_arp.h>
+
+/*for ioctl()*/
+#include <sys/ioctl.h>
+
 #include <fcntl.h>
 
 /* all typedefs in this file will be declared outside the sockets namespace,*/

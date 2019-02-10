@@ -26,7 +26,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "getopt.h"
+
+#ifdef WIN32 
+#  include "getopt.h"
+#else
+#  include <getopt.h>
+#endif
 
 #include "xkcp_config.h"
 #include "commandline.h"

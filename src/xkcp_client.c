@@ -24,7 +24,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
-#include <fcntl.h>
+
+#include "netstd.h"
 
 #include <event2/event.h>
 #include <event2/event_struct.h>
@@ -41,7 +42,6 @@
 #include "commandline.h"
 #include "xkcp_client.h"
 #include "xkcp_mon.h"
-#include "debug.h"
 
 IQUEUE_HEAD(xkcp_task_list);
 
@@ -117,7 +117,7 @@ int client_main_loop(void)
 		exit(0);
 	}
 
-	if (setnonblocking(xkcp_fd) == -1) {
+	if (setnonblocking(xkcp_fd, 1) == -1) {
 		debug(LOG_ERR, "ERROR, fcntl error: %s", strerror(errno));
 		exit(0);
 	}

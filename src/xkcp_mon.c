@@ -22,10 +22,8 @@
 #include <stdio.h>
 #include <errno.h>
 
-//#include <sys/socket.h>
-//#include <netinet/in.h>
-//#include <arpa/inet.h>
-#include <errno.h>
+#include "netstd.h"
+
 
 #include <event2/bufferevent.h>
 #include <event2/buffer.h>

@@ -16,7 +16,7 @@ set(src_xkcp_server
 	xkcp_config.c
     json.c
 	xkcp_mon.c)
-	
+
 set(src_xkcp_client
 	tcp_proxy.c
 	xkcp_client.c
@@ -29,9 +29,7 @@ set(src_xkcp_client
 	json.c
 	xkcp_mon.c)
 
-set(libs
-    #m
-	event)
+set(libs ${libs} ${EVENT_LIBRARY} ${EVENT_PTHREADS_LIBRARY} ${EVENT_EVENT_OPENSSL_LIBRARY})
 
 #ADD_DEFINITIONS(-Wall -O2 --std=gnu99 -Wmissing-declarations)
 

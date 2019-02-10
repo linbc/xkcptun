@@ -2,7 +2,6 @@ project(xkcptun)
 cmake_minimum_required(VERSION 2.6)
 
 set(PLATFORM X86)
-
 set_property(GLOBAL PROPERTY USE_FOLDERS On)
 
 if(WIN32) # Win32
@@ -75,11 +74,12 @@ elseif(UNIX)
 endif()
 
 if (NOT WIN32)
+  set(libs ${libs} m)
   if(CMAKE_COMPILER_IS_GNUCXX)
     add_subdirectory(jemalloc)
-    set(xd_libs ${xd_libs} jemalloc)
+    set(libs ${libs} jemalloc dl)
   else()
-    set(xd_libs ${xd_libs} iconv)
+    set(libs ${libs} iconv)
   endif()
 endif()
 
