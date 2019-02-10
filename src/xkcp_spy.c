@@ -23,14 +23,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
-#include <unistd.h>
 
-#include <sys/time.h>
-#include <sys/ioctl.h>
 #include <sys/types.h>          /* See NOTES */
-#include <sys/socket.h>
-#include <arpa/inet.h>
-#include <net/if.h>
 
 #include <event2/event.h>
 #include <event2/event_struct.h>
@@ -39,6 +33,8 @@
 #include <event2/buffer.h>
 #include <event2/listener.h>
 #include <event2/util.h>
+
+#include "getopt.h"
 
 static void timeoutcb(evutil_socket_t fd, short what, void *arg)
 {

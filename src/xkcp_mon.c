@@ -22,9 +22,9 @@
 #include <stdio.h>
 #include <errno.h>
 
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
+//#include <sys/socket.h>
+//#include <netinet/in.h>
+//#include <arpa/inet.h>
 #include <errno.h>
 
 #include <event2/bufferevent.h>
@@ -32,7 +32,7 @@
 #include <event2/listener.h>
 #include <event2/util.h>
 
-#include <syslog.h>
+//#include <syslog.h>
 
 #include "xkcp_mon.h"
 #include "xkcp_util.h"

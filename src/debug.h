@@ -30,6 +30,27 @@
 
 #include <string.h>
 
+#ifdef WIN32
+
+#  define LOG_EMERG       0
+#  define LOG_ALERT       1
+#  define LOG_CRIT        2
+#  define LOG_ERR         3
+#  define LOG_WARNING     4
+#  define LOG_NOTICE      5
+#  define LOG_INFO        6
+#  define LOG_DEBUG       7
+
+#define LOG_USER 4
+#define LOG_PID 5
+#else
+
+#  include <unistd.h>
+#  include <syslog.h>
+
+#endif // WIN32
+
+
 #define __FILENAME__ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
 
 typedef struct _debug_conf {
@@ -46,7 +67,7 @@ extern debugconf_t debugconf;
  * @param level Debug level
  * @param format... sprintf like format string
  */
-#define debug(level, format...) _debug(__FILENAME__, __LINE__, level, format)
+#define debug(level, format, ...) _debug(__FILENAME__, __LINE__, level, format, __VA_ARGS__)
 
 /** @internal */
 void _debug(const char *, int, int, const char *, ...);

@@ -23,15 +23,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
-#include <unistd.h>
 
-#include <sys/time.h>
-#include <sys/ioctl.h>
 #include <sys/types.h>		  /* See NOTES */
-#include <sys/socket.h>
-#include <arpa/inet.h>
-#include <net/if.h>
-#include <netinet/tcp.h>
+#include "netstd.h"
 
 #include <event2/event.h>
 #include <event2/event_struct.h>
@@ -41,7 +35,7 @@
 #include <event2/listener.h>
 #include <event2/util.h>
 
-#include <syslog.h>
+//#include <syslog.h>
 
 #include "ikcp.h"
 #include "xkcp_util.h"

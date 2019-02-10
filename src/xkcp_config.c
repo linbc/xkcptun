@@ -22,7 +22,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <syslog.h>
+//#include <syslog.h>
 
 #include "json.h"
 #include "debug.h"
