@@ -24,6 +24,7 @@
 
 struct xkcp_param {
 	char	*local_interface; 	// localaddr
+	char	*local_addr;	//windows下面取网卡真是让人悲伤的一件事情
 	char	*remote_addr; 	// remoteaddr
 	char	*key;			// key
 	char	*crypt;			// crypt

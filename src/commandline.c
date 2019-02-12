@@ -144,6 +144,10 @@ parse_commandline(int argc, char **argv)
 			param->local_interface = strdup(optarg);
 			break;
 
+		case 'I':
+
+			break;
+
 		case 'l':
 			param->local_port = atoi(optarg);
 			break;

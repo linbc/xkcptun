@@ -83,11 +83,15 @@ static struct evconnlistener *set_tcp_proxy_listener(struct event_base *base, vo
 {
 	short lport = xkcp_get_param()->local_port;
 	struct sockaddr_in sin;
+#ifdef WIN32 
+	char *addr = "0.0.0.0";
+#else
 	char *addr = get_iface_ip(xkcp_get_param()->local_interface);
 	if (!addr) {
 		debug(LOG_ERR, "get_iface_ip [%s] failed", xkcp_get_param()->local_interface);
 		exit(0);
 	}
+#endif
 
 	memset(&sin, 0, sizeof(sin));
 	sin.sin_family = AF_INET;
@@ -155,7 +159,7 @@ int client_main_loop(void)
 	event_base_dispatch(base);
 	evconnlistener_free(mlistener);
 	evconnlistener_free(listener);
-	close(xkcp_fd);
+	closesocket(xkcp_fd);
 	event_base_free(base);
 
 	return 0;

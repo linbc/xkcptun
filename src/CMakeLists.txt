@@ -18,6 +18,8 @@ set(src_xkcp_server
 	xkcp_mon.c)
 
 set(src_xkcp_client
+	getopt.c
+	getopt1.c
 	tcp_proxy.c
 	xkcp_client.c
 	xkcp_config.c
@@ -34,15 +36,15 @@ set(libs ${libs} ${EVENT_LIBRARY} ${EVENT_PTHREADS_LIBRARY} ${EVENT_EVENT_OPENSS
 #ADD_DEFINITIONS(-Wall -O2 --std=gnu99 -Wmissing-declarations)
 
 
-add_executable(xkcp_spy ${src_xkcp_spy})
-target_link_libraries(xkcp_spy ${link_flag} ${libs})
+#add_executable(xkcp_spy ${src_xkcp_spy})
+#target_link_libraries(xkcp_spy ${link_flag} ${libs})
 
 add_executable(xkcp_client ${src_xkcp_client})
 target_link_libraries(xkcp_client ${link_flag} ${libs})
 
-add_executable(xkcp_server ${src_xkcp_server})
-target_link_libraries(xkcp_server ${link_flag} ${libs})
+#add_executable(xkcp_server ${src_xkcp_server})
+#target_link_libraries(xkcp_server ${link_flag} ${libs})
 
-install(TARGETS xkcp_client xkcp_server
-        RUNTIME DESTINATION bin
-)
+#install(TARGETS xkcp_client xkcp_server
+#        RUNTIME DESTINATION bin
+#)

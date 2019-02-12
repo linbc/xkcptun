@@ -73,13 +73,14 @@ IUINT32 iclock()
 	return (IUINT32)(iclock64() & 0xfffffffful);
 }
 
+#ifndef WIN32
 char *get_iface_ip(const char *ifname)
 {
 	struct ifreq if_data;
 	struct in_addr in;
 	char *ip_str;
 	int sockd;
-	u_int32_t ip;
+	uint32_t ip;
 
 	/* Create a socket */
 	if ((sockd = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
@@ -100,15 +101,21 @@ char *get_iface_ip(const char *ifname)
 	memcpy((void *)&ip, (void *)&if_data.ifr_addr.sa_data + 2, 4);
 	in.s_addr = ip;
 
-	close(sockd);
+	closesocket(sockd);
 	ip_str = malloc(HTTP_IP_ADDR_LEN);
 	memset(ip_str, 0, HTTP_IP_ADDR_LEN);
-	if(ip_str&&inet_ntop(AF_INET, &in, ip_str, HTTP_IP_ADDR_LEN))
+	if (ip_str&&inet_ntop(AF_INET, &in, ip_str, HTTP_IP_ADDR_LEN))
 		return ip_str;
 
 	if (ip_str) free(ip_str);
 	return NULL;
 }
+#else
+char *get_iface_ip(const char *ifname)
+{
+	return "0.0.0.0";
+}
+#endif // !WIN32
 
 static void
 __list_add(iqueue_head *entry, iqueue_head *prev, iqueue_head *next)
@@ -316,6 +323,7 @@ int xkcp_main(int argc, char **argv)
 
 	if (config->daemon) {
 
+#ifndef WIN32
 		debug(LOG_INFO, "Forking into background");
 
 		switch (fork()) {
@@ -328,6 +336,7 @@ int xkcp_main(int argc, char **argv)
 			exit(0);
 			break;
 		}
+#endif
 	} else {
 		config->main_loop();
 	}

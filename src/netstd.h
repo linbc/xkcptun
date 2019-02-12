@@ -165,13 +165,47 @@ static __INLINE__ int setnonblocking(int s,int bNb){
 	return 0;
 }
 
-//static __INLINE__ int setnodelay(int fd, int enable){
-//#if PLATFORM_APPLE == PLATFORM
-//#else
-//    setsockopt(fd, IPPROTO_TCP, TCP_NODELAY, (void*)&enable, sizeof(enable));
-//#elseif
-//    return 0;
-//}
+static __INLINE__ int setnodelay(int fd, int enable)
+{
+#ifdef WIN32
+#else
+    setsockopt(fd, IPPROTO_TCP, TCP_NODELAY, (void*)&enable, sizeof(enable));
+#endif
+    return 0;
+}
+
+
+#ifdef WIN32
+#	include <WinSock2.h>
+#   include <mmsystem.h>
+#   include <time.h>
+static __INLINE__ int gettimeofday(struct timeval *tp, void *tzp)
+{
+	time_t clock;
+	struct tm tm;
+	SYSTEMTIME wtm;
+	GetLocalTime(&wtm);
+	tm.tm_year = wtm.wYear - 1900;
+	tm.tm_mon = wtm.wMonth - 1;
+	tm.tm_mday = wtm.wDay;
+	tm.tm_hour = wtm.wHour;
+	tm.tm_min = wtm.wMinute;
+	tm.tm_sec = wtm.wSecond;
+	tm.tm_isdst = -1;
+	clock = mktime(&tm);
+	tp->tv_sec = clock;
+	tp->tv_usec = wtm.wMilliseconds * 1000;
+	return (0);
+}
+
+#else
+# if defined(__APPLE_CC__)
+#   include <time.h>
+# endif
+#   include <sys/time.h>
+#   include <sys/timeb.h>
+#endif
+
 
 #endif
 
