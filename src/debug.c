@@ -39,6 +39,39 @@ debugconf_t debugconf = {
     .syslog_facility = LOG_USER
 };
 
+
+#ifdef WIN32
+
+#include <strsafe.h>	//for StringCchPrintfA
+#include <Windows.h>	//for SYSTEMTIME
+#include <process.h>	//for getpid
+
+void Time_tToSystemTime(time_t dosTime, SYSTEMTIME *systemTime)
+{
+	LARGE_INTEGER jan1970FT;
+	LARGE_INTEGER utcFT;
+	jan1970FT.QuadPart = 116444736000000000LL; // january 1st 1970
+	utcFT.QuadPart = ((unsigned __int64)dosTime) * 10000000 + jan1970FT.QuadPart;
+
+	FileTimeToSystemTime((FILETIME*)&utcFT, systemTime);
+}
+
+char* ctime_r(const time_t *t, char *buf)
+{
+	SYSTEMTIME systime;
+	const char * const dayOfWeek[] = { "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" };
+	const char * const monthOfYear[] = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+
+	Time_tToSystemTime(*t, &systime);
+	/* We don't know how long `buf` is, but assume it's rounded up from the minimum of 25 to 32 */
+	StringCchPrintfA(buf, 32, "%s %s %d %02d:%02d:%02d %04d", dayOfWeek[systime.wDayOfWeek - 1], monthOfYear[systime.wMonth - 1],
+		systime.wDay, systime.wHour, systime.wMinute, systime.wSecond, systime.wYear);
+	return buf;
+}
+
+#endif // WIN32
+
+
 /** @internal
 Do not use directly, use the debug macro */
 void
@@ -71,7 +104,7 @@ _debug(const char *filename, int line, int level, const char *format, ...)
             va_end(vlist);
             fputc('\n', stderr);
         }
-
+#ifndef WIN32
         if (debugconf.log_syslog) {
             openlog("xkcptun", LOG_PID, debugconf.syslog_facility);
             va_start(vlist, format);
@@ -79,7 +112,8 @@ _debug(const char *filename, int line, int level, const char *format, ...)
             va_end(vlist);
             closelog();
         }
-        
+#endif // !WIN32
+
         //sigprocmask(SIG_UNBLOCK, &block_chld, NULL);
     }
 }
