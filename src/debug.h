@@ -41,8 +41,9 @@
 #  define LOG_INFO        6
 #  define LOG_DEBUG       7
 
-#define LOG_USER 4
-#define LOG_PID 5
+#  define LOG_USER 4
+#  define LOG_PID 5
+
 #else
 
 #  include <unistd.h>

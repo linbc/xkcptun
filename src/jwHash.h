@@ -28,7 +28,7 @@ limitations under the License.
 #ifdef HASHDEBUG
 # define HASH_DEBUG(fmt,args...) printf(fmt, ## args)
 #else
-# define HASH_DEBUG(fmt,args,...) do {} while (0);
+# define HASH_DEBUG(fmt,...) do {} while (0);
 #endif
 
 
