@@ -18,6 +18,7 @@
  *                                                                  *
 \********************************************************************/
 
+
 #include <stdio.h>
 #include <assert.h>
 #include <stdlib.h>
@@ -234,7 +235,7 @@ int server_main_loop()
 	event_base_dispatch(base);
 	
 	evconnlistener_free(mon_listener);
-	close(xkcp_fd);
+	closesocket(xkcp_fd);
 	event_base_free(base);
 	delete_hash(xkcp_hash, (void*)task_list_free, HASHPTR/*value*/, HASHSTRING/*key*/);
 	

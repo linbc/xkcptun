@@ -24,6 +24,7 @@
 #ifdef WIN32
 #  ifdef _MSC_VER
 #    pragma comment(lib, "wsock32.lib")
+#    pragma comment(lib, "ws2_32.lib")		//for getnameinfo
 #    pragma warning(disable:4514)
 #  endif
 

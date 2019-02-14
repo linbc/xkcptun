@@ -79,7 +79,7 @@ static void get_client_info(struct bufferevent *bev, void *ctx)
 	jwHashTable *xkcp_hash = ctx;
 	struct evbuffer *output = bufferevent_get_output(bev);
 	evbuffer_add_printf(output, "client list:\n");
-	for(int i = 0; i < xkcp_hash->buckets; i++) {
+	for(size_t i = 0; i < xkcp_hash->buckets; i++) {
 		jwHashEntry *entry = xkcp_hash->bucket[i];
 		while (entry) {
 			evbuffer_add_printf(output, "hash_id [%d] connected client [%s] connection [%d] \n", 
@@ -95,7 +95,7 @@ static void get_server_status(struct bufferevent *bev, void *ctx)
 	jwHashTable *xkcp_hash = ctx;
 	struct evbuffer *output = bufferevent_get_output(bev);
 	evbuffer_add_printf(output, "client detail list:\n");
-	for(int i = 0; i < xkcp_hash->buckets; i++) {
+	for(size_t i = 0; i < xkcp_hash->buckets; i++) {
 		jwHashEntry *entry = xkcp_hash->bucket[i];
 		while (entry) {
 			evbuffer_add_printf(output, "hash_id [%d] connected client [%s]: \n", i, entry->key.strValue);

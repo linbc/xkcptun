@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.6)
 
 project(xkcptun C)
 
-set(src_win32 getopt.c getopt1.c)
+set(src_win32 netstd.h getopt.c getopt1.c)
 
 set(src_xkcp_spy
 	${src_win32}
