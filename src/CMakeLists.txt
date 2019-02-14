@@ -2,10 +2,14 @@ cmake_minimum_required(VERSION 2.6)
 
 project(xkcptun C)
 
+set(src_win32 getopt.c getopt1.c)
+
 set(src_xkcp_spy
+	${src_win32}
 	xkcp_spy.c)
 
 set(src_xkcp_server
+	${src_win32}
 	xkcp_server.c
 	tcp_client.c
 	debug.c
@@ -18,6 +22,7 @@ set(src_xkcp_server
 	xkcp_mon.c)
 
 set(src_xkcp_client
+	${src_win32}
 	getopt.c
 	getopt1.c
 	tcp_proxy.c
